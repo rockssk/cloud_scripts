@@ -5,4 +5,4 @@ Though uploading files to S3 is straight forward using AWS CLI commands, at some
 
 Usage
 
-sh  s3_upload.sh <Bucket-name> <hive-table-name>/<partition> <local_file_location> 
+```sh  s3_upload.sh <Bucket-name> <hive-table-name>/<partition> <local_file_location> ```
