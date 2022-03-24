@@ -1,0 +1,32 @@
+name: manage-azure-policy-3c5b9d76
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'policies/Synapse_AAD_Only_Auth_f0f7eb01-0792-4092-8737-9487b3bcc1b6/**'
+#      - .github/workflows/manage-azure-policy-3c5b9d76.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_3c5b9d76}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          policies/Synapse_AAD_Only_Auth_f0f7eb01-0792-4092-8737-9487b3bcc1b6/**

@@ -1,0 +1,58 @@
+{
+ "properties": {
+  "displayName": "Synapse AAD Only Auth",
+  "policyType": "Custom",
+  "mode": "Indexed",
+  "description": "Deny Synapse workspace creation if local auth is enabled",
+  "metadata": {
+   "category": "Synapse",
+   "createdBy": "88836eaf-fa43-4a5a-84ed-5962cd4c9815",
+   "createdOn": "2022-03-24T14:20:39.8958432Z",
+   "updatedBy": "88836eaf-fa43-4a5a-84ed-5962cd4c9815",
+   "updatedOn": "2022-03-24T14:42:05.7883404Z"
+  },
+  "parameters": {
+   "effect": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Effect",
+     "description": "Enable or disable the execution of the policy"
+    },
+    "allowedValues": [
+     "Audit",
+     "Disabled",
+     "Deny"
+    ],
+    "defaultValue": "Deny"
+   }
+  },
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Synapse/workspaces"
+     },
+     {
+      "anyOf": [
+       {
+        "field": "Microsoft.Synapse/workspaces/azureADOnlyAuthentication",
+        "exists": false
+       },
+       {
+        "field": "Microsoft.Synapse/workspaces/azureADOnlyAuthentication",
+        "equals": "false"
+       }
+      ]
+     }
+    ]
+   },
+   "then": {
+    "effect": "[parameters('effect')]"
+   }
+  }
+ },
+ "id": "/subscriptions/a323610f-cb53-4636-9260-611bcda58307/providers/Microsoft.Authorization/policyDefinitions/f0f7eb01-0792-4092-8737-9487b3bcc1b6",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "f0f7eb01-0792-4092-8737-9487b3bcc1b6"
+}
