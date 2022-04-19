@@ -1,0 +1,55 @@
+{
+ "properties": {
+  "displayName": "ADX - Audit Cluster level Admins",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "No Cluster should have all database admin roles assigned",
+  "metadata": {
+   "version": "1.0.0",
+   "createdBy": "88836eaf-fa43-4a5a-84ed-5962cd4c9815",
+   "createdOn": "2022-03-21T15:39:18.4500504Z",
+   "updatedBy": "88836eaf-fa43-4a5a-84ed-5962cd4c9815",
+   "updatedOn": "2022-04-19T19:47:17.447782Z",
+   "category": "Azure Data Explorer"
+  },
+  "parameters": {
+   "effect": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Effect",
+     "description": "Enable or disable the execution of the policy"
+    },
+    "allowedValues": [
+     "Audit",
+     "Deny",
+     "Disabled"
+    ],
+    "defaultValue": "Deny"
+   }
+  },
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Kusto/Clusters/principalAssignments"
+     },
+     {
+      "field": "Microsoft.Kusto/Clusters/principalAssignments/role",
+      "exists": "true"
+     },
+     {
+      "field": "Microsoft.Kusto/Clusters/principalAssignments/role",
+      "equals": "AllDatabasesAdmin"
+     }
+    ]
+   },
+   "then": {
+    "effect": "[parameters('effect')]"
+   }
+  }
+ },
+ "id": "/subscriptions/a323610f-cb53-4636-9260-611bcda58307/providers/Microsoft.Authorization/policyDefinitions/bcb80a8a-a820-4a31-aa5e-d1a5555df115",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "bcb80a8a-a820-4a31-aa5e-d1a5555df115"
+}
