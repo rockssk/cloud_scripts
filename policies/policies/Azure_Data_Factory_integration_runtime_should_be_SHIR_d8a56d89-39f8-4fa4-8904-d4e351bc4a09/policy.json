@@ -1,0 +1,51 @@
+{
+ "properties": {
+  "displayName": "Azure Data Factory integration runtime should be SHIR",
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+   "version": "1.0.0-preview",
+   "category": "Data Factory",
+   "preview": true,
+   "createdBy": "88836eaf-fa43-4a5a-84ed-5962cd4c9815",
+   "createdOn": "2022-09-22T14:09:01.9684334Z",
+   "updatedBy": "88836eaf-fa43-4a5a-84ed-5962cd4c9815",
+   "updatedOn": "2022-09-22T14:15:07.5671249Z"
+  },
+  "parameters": {
+   "effect": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Effect",
+     "description": "Enable or disable the execution of the policy"
+    },
+    "allowedValues": [
+     "Audit",
+     "Deny",
+     "Disabled"
+    ],
+    "defaultValue": "Audit"
+   }
+  },
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.DataFactory/factories/integrationRuntimes"
+     },
+     {
+      "field": "Microsoft.DataFactory/factories/integrationruntimes/type",
+      "notEquals": "SelfHosted"
+     }
+    ]
+   },
+   "then": {
+    "effect": "[parameters('effect')]"
+   }
+  }
+ },
+ "id": "/subscriptions/a323610f-cb53-4636-9260-611bcda58307/providers/Microsoft.Authorization/policyDefinitions/d8a56d89-39f8-4fa4-8904-d4e351bc4a09",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "d8a56d89-39f8-4fa4-8904-d4e351bc4a09"
+}
